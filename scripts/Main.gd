@@ -23,6 +23,7 @@ var ball_configs: Array = [
 ]
 
 func _ready() -> void:
+	randomize()
 	_setup_arena()
 	_spawn_balls()
 
