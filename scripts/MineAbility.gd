@@ -6,7 +6,7 @@ const DROP_MAX: float = 4.0
 var drop_timer: float = 2.0
 var drop_interval: float = 3.0
 
-const _MINE_SCRIPT = preload("res://scripts/Mine.gd")
+const _MINE_SCENE = preload("res://scenes/Mine.tscn")
 
 func _ready() -> void:
 	drop_interval = randf_range(DROP_MIN, DROP_MAX)
@@ -25,7 +25,7 @@ func _drop_mine() -> void:
 	if not is_instance_valid(ball) or ball.game_manager == null:
 		return
 
-	var mine = _MINE_SCRIPT.new()
+	var mine := _MINE_SCENE.instantiate()
 	mine.position = ball.global_position
 	mine.owner_ball = ball
 	ball.game_manager.add_child(mine)

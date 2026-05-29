@@ -1,19 +1,18 @@
 extends Area2D
 
+@export var owner_ball: Node = null
+
 var damage: float = 45.0
 var lifetime: float = 8.0
-var owner_ball: Node = null
 var armed: bool = false
 var arm_delay: float = 0.8
 var flash_timer: float = 0.0
 
+const MINE_RADIUS: float = 10.0
+const MINE_COLLISION_RADIUS: float = 14.0
+
 func _ready() -> void:
 	monitoring = false
-	var col := CollisionShape2D.new()
-	var shape := CircleShape2D.new()
-	shape.radius = 14.0
-	col.shape = shape
-	add_child(col)
 	body_entered.connect(_on_body_entered)
 
 func _process(delta: float) -> void:

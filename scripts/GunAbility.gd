@@ -10,7 +10,7 @@ var fire_timer: float = 1.0
 var fire_interval: float = 1.8
 var barrel_angle: float = 0.0
 
-const _BULLET_SCRIPT = preload("res://scripts/Bullet.gd")
+const _BULLET_SCENE = preload("res://scenes/Bullet.tscn")
 
 func _ready() -> void:
 	fire_interval = randf_range(FIRE_MIN, FIRE_MAX)
@@ -32,9 +32,10 @@ func _fire() -> void:
 	barrel_angle = randf() * TAU
 	var dir := Vector2.RIGHT.rotated(barrel_angle)
 
-	var bullet = _BULLET_SCRIPT.new()
+	var bullet := _BULLET_SCENE.instantiate()
 	bullet.position = ball.global_position + dir * (BALL_RADIUS + 6.0)
-	bullet.velocity = dir * BULLET_SPEED
+	bullet.rotation = barrel_angle
+	bullet.speed = BULLET_SPEED
 	bullet.damage = BULLET_DAMAGE
 	bullet.owner_ball = ball
 	ball.game_manager.add_child(bullet)

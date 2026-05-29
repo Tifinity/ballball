@@ -9,15 +9,7 @@ const HIT_COOLDOWN: float = 0.4
 var hit_cooldown: float = 0.0
 
 func _ready() -> void:
-	var sword_area := Area2D.new()
-	var sword_col := CollisionShape2D.new()
-	var shape := CircleShape2D.new()
-	shape.radius = 8.0
-	sword_col.shape = shape
-	sword_col.position = Vector2(0.0, -(BALL_RADIUS + SWORD_LENGTH))
-	sword_area.add_child(sword_col)
-	add_child(sword_area)
-	sword_area.body_entered.connect(_on_sword_hit)
+	$SwordArea.body_entered.connect(_on_sword_hit)
 
 func _physics_process(delta: float) -> void:
 	rotation += ROTATION_SPEED * delta

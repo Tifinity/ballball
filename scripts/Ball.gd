@@ -14,10 +14,10 @@ var damage_cooldown: float = 0.0
 const DAMAGE_COOLDOWN_TIME: float = 0.5
 const BALL_RADIUS: float = 20.0
 
-const ABILITY_SCRIPTS := {
-	"SwordShield": preload("res://scripts/SwordShieldAbility.gd"),
-	"Gun":         preload("res://scripts/GunAbility.gd"),
-	"Mine":        preload("res://scripts/MineAbility.gd"),
+const ABILITY_SCENES := {
+	"SwordShield": preload("res://scenes/SwordShieldAbility.tscn"),
+	"Gun":         preload("res://scenes/GunAbility.tscn"),
+	"Mine":        preload("res://scenes/MineAbility.tscn"),
 }
 
 func _ready() -> void:
@@ -82,5 +82,6 @@ func setup(color: Color, id: int, speed: float, hp: float, manager: Node, abilit
 	game_manager = manager
 	linear_velocity = Vector2.RIGHT.rotated(randf() * TAU) * speed
 
-	if ability_type in ABILITY_SCRIPTS:
-		add_child(ABILITY_SCRIPTS[ability_type].new())
+	if ability_type in ABILITY_SCENES:
+		var ability_scene: PackedScene = ABILITY_SCENES[ability_type]
+		add_child(ability_scene.instantiate())

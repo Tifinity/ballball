@@ -1,20 +1,17 @@
 extends Area2D
 
-var velocity: Vector2 = Vector2.ZERO
+var speed: float = 380.0
 var damage: float = 15.0
 var lifetime: float = 2.5
 var owner_ball: Node = null
 
+const BULLET_RADIUS: float = 5.0
+
 func _ready() -> void:
-	var col := CollisionShape2D.new()
-	var shape := CircleShape2D.new()
-	shape.radius = 5.0
-	col.shape = shape
-	add_child(col)
 	body_entered.connect(_on_body_entered)
 
 func _physics_process(delta: float) -> void:
-	position += velocity * delta
+	position += Vector2.RIGHT.rotated(rotation) * speed * delta
 	lifetime -= delta
 	if lifetime <= 0.0:
 		queue_free()
