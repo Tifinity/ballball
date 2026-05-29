@@ -66,7 +66,7 @@ func _spawn_balls() -> void:
 		add_child(ball)
 		ball.position = pos
 		var cfg: Dictionary = ball_configs[i % ball_configs.size()]
-		var ability := ABILITY_TYPES[randi() % ABILITY_TYPES.size()]
+		var ability: String = ABILITY_TYPES[randi() % ABILITY_TYPES.size()]
 		ball.setup(cfg["color"], i, cfg["speed"], cfg["hp"], self, ability)
 		alive_balls.append(ball)
 
