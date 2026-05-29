@@ -7,17 +7,19 @@ const WALL_VISUAL: float = 16.0
 const NUM_BALLS: int = 6
 const BALL_RADIUS: float = 20.0
 
+const ABILITY_TYPES := ["SwordShield", "Gun", "Mine"]
+
 var ball_scene: PackedScene = preload("res://scenes/Ball.tscn")
 var alive_balls: Array = []
 var game_over: bool = false
 
 var ball_configs: Array = [
-	{"color": Color(0.95, 0.25, 0.25), "speed": 220.0, "hp": 110.0},                                    # 红（无能力）
-	{"color": Color(0.25, 0.55, 0.95), "speed": 200.0, "hp": 95.0,  "ability": "SwordShield"},          # 蓝（剑盾）
-	{"color": Color(0.25, 0.85, 0.35), "speed": 160.0, "hp": 130.0, "ability": "Mine"},                 # 绿（地雷，慢血多）
-	{"color": Color(0.95, 0.85, 0.15), "speed": 230.0, "hp": 85.0,  "ability": "Gun"},                  # 黄（枪）
-	{"color": Color(0.75, 0.25, 0.95), "speed": 195.0, "hp": 100.0, "ability": "SwordShield"},          # 紫（剑盾）
-	{"color": Color(0.95, 0.55, 0.10), "speed": 260.0, "hp": 75.0,  "ability": "Gun"},                  # 橙（枪，最快）
+	{"color": Color(0.95, 0.25, 0.25), "speed": 220.0, "hp": 110.0},
+	{"color": Color(0.25, 0.55, 0.95), "speed": 200.0, "hp": 95.0},
+	{"color": Color(0.25, 0.85, 0.35), "speed": 160.0, "hp": 130.0},
+	{"color": Color(0.95, 0.85, 0.15), "speed": 230.0, "hp": 85.0},
+	{"color": Color(0.75, 0.25, 0.95), "speed": 195.0, "hp": 100.0},
+	{"color": Color(0.95, 0.55, 0.10), "speed": 260.0, "hp": 75.0},
 ]
 
 func _ready() -> void:
@@ -64,7 +66,8 @@ func _spawn_balls() -> void:
 		add_child(ball)
 		ball.position = pos
 		var cfg: Dictionary = ball_configs[i % ball_configs.size()]
-		ball.setup(cfg["color"], i, cfg["speed"], cfg["hp"], self, cfg.get("ability", ""))
+		var ability := ABILITY_TYPES[randi() % ABILITY_TYPES.size()]
+		ball.setup(cfg["color"], i, cfg["speed"], cfg["hp"], self, ability)
 		alive_balls.append(ball)
 
 func on_ball_died(ball: Node) -> void:
