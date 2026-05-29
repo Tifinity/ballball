@@ -54,6 +54,11 @@ func _draw() -> void:
 
 	draw_string(ThemeDB.fallback_font, Vector2(-5, 6), str(ball_id), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color.WHITE)
 
+	# Cascade draw to ability children
+	for child in get_children():
+		if child.has_method("queue_redraw"):
+			child.queue_redraw()
+
 func _on_body_entered(body: Node) -> void:
 	if body is RigidBody2D:
 		var rb := body as RigidBody2D
